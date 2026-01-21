@@ -7,6 +7,7 @@ setup(
     name="hybrid-anime-recommender",
     version="0.1.0",
     author="Amar",
+    author_email="amar8737@users.noreply.github.com",
     description="A hybrid anime recommendation system",
     long_description=long_description,
     long_description_content_type="text/markdown",

@@ -45,6 +45,10 @@ def main():
     
     args = parser.parse_args()
     
+    # Validate content_weight
+    if not 0 <= args.content_weight <= 1:
+        parser.error("content-weight must be between 0 and 1")
+    
     # Validate inputs
     if args.user_id is None and args.anime_id is None:
         parser.error("At least one of --user-id or --anime-id must be provided")
@@ -83,7 +87,13 @@ def main():
     print("-" * 60)
     
     for i, (anime_id, score) in enumerate(recommendations, 1):
-        anime_info = anime_df[anime_df['anime_id'] == anime_id].iloc[0]
+        anime_matches = anime_df[anime_df['anime_id'] == anime_id]
+        if anime_matches.empty:
+            print(f"{i}. Unknown Anime (ID: {anime_id})")
+            print(f"   Score: {score:.4f}")
+            print()
+            continue
+        anime_info = anime_matches.iloc[0]
         print(f"{i}. {anime_info['title']} (ID: {anime_id})")
         print(f"   Genres: {anime_info['genres']}")
         print(f"   Score: {score:.4f}")

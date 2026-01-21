@@ -24,9 +24,9 @@ class ContentBasedRecommender:
         """
         # Combine text features
         anime_df = anime_df.copy()
+        description = anime_df['description'].fillna('') if 'description' in anime_df.columns else ''
         anime_df['combined_features'] = (
-            anime_df['genres'].fillna('') + ' ' + 
-            anime_df.get('description', '').fillna('')
+            anime_df['genres'].fillna('') + ' ' + description
         )
         
         # Create TF-IDF matrix
